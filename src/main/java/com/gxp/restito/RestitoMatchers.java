@@ -11,8 +11,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
  * @author juboyd
  */
 public class RestitoMatchers {
-
-	public static RequestMatcher requestWithUriThat(Matcher<String> uriMatcher) {
+	
+	public static RequestMatcher uri(Matcher<String> uriMatcher) {
 		return new RequestMatcher(uriMatcher, Matchers.any(String.class));
 	}
 

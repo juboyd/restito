@@ -1,7 +1,7 @@
 package com.gxp.restito;
 
-import com.gxp.restito.request.Request;
 import com.gxp.restito.request.NettyHttpRequestAdapter;
+import com.gxp.restito.request.Request;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.gxp.restito.tests;
 
 import com.gxp.restito.Restito;
+import com.gxp.restito.RestitoMatchers;
 import static com.gxp.restito.tests.ClientHelper.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -25,28 +26,22 @@ public class ExpectationsTest {
 	@Test
 	public void knowsWhenUrlWasCalled() {
 
-		Restito.expect(SOME_URI);
-
 		GET(SOME_URI);
 
-		Restito.verify();
+		Restito.verify(RestitoMatchers.uri(equalTo(SOME_URI)));
 	}
 
 	@Test(expected = AssertionError.class)
 	public void knowsWhenUrlWasNotCalled() {
 
-		Restito.expect(SOME_URI);
-
-		Restito.verify();
+		Restito.verify(RestitoMatchers.uri(equalTo(SOME_URI)));
 	}
 
 	@Test
 	public void identifiesUrlThatWasNotCalled() {
 
-		Restito.expect(SOME_URI);
-
 		try {
-			Restito.verify();
+			Restito.verify(RestitoMatchers.uri(equalTo(SOME_URI)));
 		} catch (AssertionError ex) {
 
 			assertThat(ex.getMessage(), containsString(SOME_URI));
@@ -58,12 +53,10 @@ public class ExpectationsTest {
 
 		String someOtherUri = "/some/other/uri";
 		
-		Restito.expect(SOME_URI);
-
 		GET(someOtherUri);
 
 		try {
-			Restito.verify();
+			Restito.verify(RestitoMatchers.uri(equalTo(SOME_URI)));
 		} catch (AssertionError ex) {
 
 			assertThat(ex.getMessage(), containsString(someOtherUri));
@@ -72,22 +65,18 @@ public class ExpectationsTest {
 	
 	@Test
 	public void canSetExpectationOfHttpMethod() {
-	
-		Restito.expect("GET", "/some/path");
 		
 		GET("/some/path");
 		
-		Restito.verify();
+		Restito.verify(RestitoMatchers.request(equalTo("GET"), equalTo("/some/path")));
 	}
 	
 	@Test(expected=AssertionError.class)
 	public void failsWhenWrongMethodAndCorrectUriIsCalled() {
 		
-		Restito.expect("GET", "/some/path");
-		
 		POST("/some/path");
 		
-		Restito.verify();
+		Restito.verify(RestitoMatchers.request(equalTo("GET"), any(String.class)));
 	}
 
 //	@Test
