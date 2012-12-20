@@ -1,4 +1,4 @@
-package com.gxp.restito;
+package com.gxp.restito.tests;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
